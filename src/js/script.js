@@ -76,25 +76,67 @@ $(document).ready(function(){
   $('form').submit(function(e) {
     e.preventDefault(); 
     
-    if ($(this).valid()) {
+    if (!$(this).valid()) {
       return;
     }
       
     
     
-    $.ajax({
-      type:"POST",
-      url:"mailer/smart.php",
-      data:$(this).serialize()
-    }).done(function() {
-      $(this).find("input").val("");
-      $('#consultation, #order').fadeOut();
-      $('.overlay, #thanks').fadeIn('fast');
-      $('form').trigger('reset');
-    });
-  
-    return false;
+      $.ajax({
+        type:"POST",
+        url:"mailer/smart.php",
+        data:$(this).serialize()
+      }).done(function() {
+        $(this).find("input").val("");
+        $('#consultation, #order').fadeOut();
+        $('.overlay, #thanks').fadeIn('fast');
+        $('form').trigger('reset');
+        setTimeout(function(){
+          $('#thanks, .overlay').fadeOut('slow'); 
+          }, 3000);
+      });
+    
+      return false;
+    
+   
   });
+
+  
+  // $('input[name=phone]').mask("+38 (999) 999-99-99");
+
+
+  // $("form").each(function () {
+  //     $(this).validate({
+  //         rules: {
+  //             name: 'required',
+  //             phone: {
+  //                 required: true,
+  //                 minlength: 10
+  //             }
+  //         },
+  //         messages: {
+  //             name: "Введите ваше имя",
+  //             phone: {
+  //                 required: "Нам нужен ваш номер для связи с вами",
+  //                 minlength: jQuery.validator.format("Введите не менее {0} символов!")
+  //                 }
+  //             },
+  //       submitHandler: function (form) {
+  //         $.ajax({
+  //           type: "POST",
+  //           url: $(form).attr('action'),
+  //           data: $(form).serialize()
+  //         }).done(function () {
+  //             $(this).find("input").val("");
+  //             $('#contacts').fadeOut();
+  //             $('.overlay, #thanks').fadeIn('slow');
+  //             $('form').trigger('reset');
+  //         });
+  //         return false;
+  //       }
+  //     });
+  //   });
+
 
   
   
